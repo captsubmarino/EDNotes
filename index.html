@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Viva Study Tracker</title><link rel="stylesheet" href="style.css"></head>
+<body>
+    <header><h1>Viva Study Tracker</h1><nav><button class="tab-btn active" data-tab="dashboard">Dashboard</button><button class="tab-btn" data-tab="anat">Anat</button><button class="tab-btn" data-tab="path">Path</button><button class="tab-btn" data-tab="physio">Physio</button><button class="tab-btn" data-tab="pharm">Pharm</button><button class="tab-btn" data-tab="cbb">CBB</button></nav></header>
+    <main>
+        <div id="dashboard" class="tab-content active">
+            
+            <div class="disclaimer-box">
+                <p><strong>Acknowledgement:</strong> All content is sourced from the ACEM training site and EDvivas. This page is for personal data reorganization only.</p>
+                <a href="https://notebooklm.google.com/notebook/e1cdd0b3-3f57-452b-84e3-bc3fd476d80c?authuser=3" target="_blank" class="notebook-link">Open Study Notes in NotebookLM</a>
+            </div>
+
+            <h2>Overall Progress</h2>
+            <div class="progress-container"><div class="progress-bar" id="total-progress-bar"></div><span class="progress-label" id="total-progress-label"></span></div>
+            <div class="subject-progress-grid"><div id="anat-progress-card" class="progress-card"></div><div id="path-progress-card" class="progress-card"></div><div id="physio-progress-card" class="progress-card"></div><div id="pharm-progress-card" class="progress-card"></div><div id="cbb-progress-card" class="progress-card"></div></div>
+            <div class="downloads-section">
+                <h2>Downloads</h2>
+                <a href="combined1.pdf" class="download-link" download>Download PDF Summary</a>
+                <a href="viva_links_fixed.xlsx" class="download-link" download>Download Excel Source File</a>
+            </div>
+        </div>
+        <div id="anat" class="tab-content"></div><div id="path" class="tab-content"></div><div id="physio" class="tab-content"></div><div id="pharm" class="tab-content"></div><div id="cbb" class="tab-content"></div>
+    </main>
+    <script src="script.js"></script>
+</body>
+</html>
