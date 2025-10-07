@@ -94,15 +94,27 @@ def generate_web_data():
     return all_subject_data
 
 def write_html_file():
-    """Writes the HTML file, now with the timer element."""
+    """Writes the HTML file, now with the dual timer elements."""
     cache_buster = int(time.time())
     html_content = f"""<!DOCTYPE html>
 <html lang="en">
 <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Viva Study Tracker</title><link rel="stylesheet" href="style.css?v={cache_buster}"></head>
 <body>
-    <div id="viva-timer">
-        <div id="timer-display">02:00</div>
-        <button id="timer-control">Start</button>
+    <div id="timer-container">
+        <div class="timer-module">
+            <div id="timer-display-2min" class="timer-display">02:00</div>
+            <div class="timer-buttons">
+                <button id="timer-control-2min">Start</button>
+                <button id="timer-reset-2min">Reset</button>
+            </div>
+        </div>
+        <div class="timer-module">
+            <div id="timer-display-10min" class="timer-display">10:00</div>
+            <div class="timer-buttons">
+                <button id="timer-control-10min">Start</button>
+                <button id="timer-reset-10min">Reset</button>
+            </div>
+        </div>
     </div>
 
     <header><h1>Viva Study Tracker</h1><nav><button class="tab-btn active" data-tab="dashboard">Dashboard</button><button class="tab-btn" data-tab="anat">Anat</button><button class="tab-btn" data-tab="path">Path</button><button class="tab-btn" data-tab="physio">Physio</button><button class="tab-btn" data-tab="pharm">Pharm</button><button class="tab-btn" data-tab="cbb">CBB</button></nav></header>
@@ -130,7 +142,7 @@ def write_html_file():
     print(f"✅ Created '{OUTPUT_HTML_FILE}'")
 
 def write_css_file():
-    """Writes the CSS file, with new styles for the floating timer."""
+    """Writes the CSS file, with new styles for the dual timers."""
     css_content = """body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;background-color:#f4f7f9;color:#333;margin:0;padding:20px}header{text-align:center;margin-bottom:20px}h1{color:#2c3e50}h2{color:#34495e;border-bottom:2px solid #e0e0e0;padding-bottom:10px;margin-top:40px}nav{display:flex;justify-content:center;background-color:#fff;border-radius:8px;padding:5px;box-shadow:0 2px 4px rgba(0,0,0,.1);margin-bottom:20px}.tab-btn{padding:10px 20px;border:none;background-color:transparent;cursor:pointer;font-size:16px;border-radius:6px;transition:background-color .3s,color .3s}.tab-btn.active{background-color:#3498db;color:#fff}.tab-btn:hover:not(.active){background-color:#ecf0f1}.tab-content{display:none;padding:20px;background-color:#fff;border-radius:8px;box-shadow:0 2px 4px rgba(0,0,0,.1)}.tab-content.active{display:block}.progress-container{width:100%;background-color:#e0e0e0;border-radius:25px;margin:15px 0;position:relative;height:30px}.progress-bar{height:100%;background-color:#2ecc71;border-radius:25px;text-align:center;line-height:30px;color:#fff;width:0;transition:width .5s ease-in-out}.progress-label{position:absolute;width:100%;text-align:center;top:0;left:0;line-height:30px;font-weight:700;color:#333}.subject-progress-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:20px;margin-top:20px}.progress-card{padding:15px;background:#fff;border-left:5px solid #3498db}.progress-card h3{margin-top:0}
 .subject-table-container{display:grid;grid-template-columns:repeat(auto-fit,minmax(900px,1fr));gap:20px}
 table{width:100%;border-collapse:collapse;font-size:14px}th,td{padding:10px;border:1px solid #ddd;text-align:left}th{background-color:#ecf0f1}td a{text-decoration:none;color:#2980b9;font-weight:500}td a:hover{text-decoration:underline}.status-done{background-color:#d4edda;color:#155724;font-weight:700}.status-pending{background-color:#fff3cd;color:#856404}.downloads-section{margin-top:40px;padding-top:20px;border-top:2px solid #e0e0e0;text-align:center}.download-link{display:inline-block;margin:5px 10px;padding:10px 18px;background-color:#7f8c8d;color:#fff;text-decoration:none;border-radius:5px;font-weight:700;transition:background-color .3s}.download-link:hover{background-color:#6c7a7d}.disclaimer-box{background-color:#ecf0f1;border-left:5px solid #7f8c8d;padding:15px;margin-bottom:30px;border-radius:5px;text-align:center}.disclaimer-box p{margin:0 0 15px;color:#555}.notebook-link{display:inline-block;padding:10px 18px;background-color:#4285F4;color:#fff;text-decoration:none;border-radius:5px;font-weight:700;transition:background-color .3s}.notebook-link:hover{background-color:#357ae8}
@@ -139,21 +151,37 @@ table{width:100%;border-collapse:collapse;font-size:14px}th,td{padding:10px;bord
 /* --- Expandable Image Row Styles --- */
 .expandable-image-row td{padding:15px;background-color:#f8f9fa;text-align:center}.expandable-image-row img{max-width:100%;height:auto;border-radius:5px;border:1px solid #ccc}.image-toggle-link{cursor:pointer}
 /* --- NEW: Floating Timer Styles --- */
-#viva-timer{position:fixed;top:20px;right:20px;background-color:#2c3e50;color:white;padding:15px;border-radius:8px;box-shadow:0 4px 8px rgba(0,0,0,0.2);z-index:1000;text-align:center}#timer-display{font-size:2em;font-family:monospace;margin-bottom:10px}#timer-control{width:100%;padding:8px;border:none;border-radius:5px;background-color:#3498db;color:white;font-size:1em;cursor:pointer;transition:background-color .3s}#timer-control:hover{background-color:#2980b9}#timer-control.running{background-color:#e74c3c}#timer-control.running:hover{background-color:#c0392b}
+#timer-container{position:fixed;top:20px;right:20px;background-color:#2c3e50;color:white;padding:10px;border-radius:8px;box-shadow:0 4px 8px rgba(0,0,0,0.2);z-index:1000;width:180px}.timer-module{text-align:center;padding:10px;border-bottom:1px solid #34495e}.timer-module:last-child{border-bottom:none}.timer-display{font-size:2em;font-family:monospace;margin-bottom:10px}.timer-buttons{display:flex;gap:8px}.timer-buttons button{flex-grow:1;padding:8px;border:none;border-radius:5px;color:white;font-size:1em;cursor:pointer;transition:background-color .3s}.timer-buttons button:first-child{background-color:#27ae60}.timer-buttons button:first-child:hover{background-color:#229954}.timer-buttons button:first-child.running{background-color:#e74c3c}.timer-buttons button:first-child.running:hover{background-color:#c0392b}.timer-buttons button:last-child{background-color:#7f8c8d}.timer-buttons button:last-child:hover{background-color:#6c7a7d}
 """
     with open(OUTPUT_CSS_FILE, 'w', encoding='utf-8') as f: f.write(css_content)
     print(f"✅ Created '{OUTPUT_CSS_FILE}'")
 
 def write_js_file(data):
-    """Writes the JS file, now with timer logic."""
+    """Writes the JS file, now with modular, dual timer logic."""
     js_template = r"""
 const subjectData = {data_placeholder};
 
-// --- NEW: Floating Timer Logic ---
-const VIVA_TIMER_SECONDS = 120; // 2 minutes
-let timerInterval = null;
-let secondsRemaining = VIVA_TIMER_SECONDS;
-let timerState = 'stopped'; // Can be 'stopped', 'running', 'paused'
+// --- NEW: Modular Timer Logic for Multiple Timers ---
+const timers = {
+    '2min': {
+        totalSeconds: 120,
+        secondsRemaining: 120,
+        intervalId: null,
+        state: 'stopped', // 'stopped', 'running', 'paused'
+        displayEl: null,
+        controlEl: null,
+        resetEl: null
+    },
+    '10min': {
+        totalSeconds: 600,
+        secondsRemaining: 600,
+        intervalId: null,
+        state: 'stopped',
+        displayEl: null,
+        controlEl: null,
+        resetEl: null
+    }
+};
 
 function formatTime(seconds) {
     const min = Math.floor(seconds / 60);
@@ -161,42 +189,48 @@ function formatTime(seconds) {
     return `${String(min).padStart(2, '0')}:${String(sec).padStart(2, '0')}`;
 }
 
-function updateTimerDisplay() {
-    const timerDisplay = document.getElementById('timer-display');
-    timerDisplay.textContent = formatTime(secondsRemaining);
+function updateTimerDisplay(key) {
+    const timer = timers[key];
+    timer.displayEl.textContent = formatTime(timer.secondsRemaining);
 }
 
-function controlTimer() {
-    const timerControl = document.getElementById('timer-control');
+function controlTimer(key) {
+    const timer = timers[key];
 
-    if (timerState === 'running') {
-        // --- Stop/Pause the timer ---
-        clearInterval(timerInterval);
-        timerState = 'paused';
-        timerControl.textContent = 'Resume';
-        timerControl.classList.remove('running');
+    if (timer.state === 'running') {
+        // --- Pause the timer ---
+        clearInterval(timer.intervalId);
+        timer.state = 'paused';
+        timer.controlEl.textContent = 'Resume';
+        timer.controlEl.classList.remove('running');
     } else {
         // --- Start or Resume the timer ---
-        if (timerState === 'stopped') {
-            secondsRemaining = VIVA_TIMER_SECONDS;
-            updateTimerDisplay();
-        }
-        timerState = 'running';
-        timerControl.textContent = 'Pause';
-        timerControl.classList.add('running');
+        timer.state = 'running';
+        timer.controlEl.textContent = 'Pause';
+        timer.controlEl.classList.add('running');
         
-        timerInterval = setInterval(() => {
-            secondsRemaining--;
-            updateTimerDisplay();
-            if (secondsRemaining <= 0) {
-                clearInterval(timerInterval);
-                timerState = 'stopped';
-                timerControl.textContent = 'Reset';
-                timerControl.classList.remove('running');
-                alert('Time is up!');
+        timer.intervalId = setInterval(() => {
+            timer.secondsRemaining--;
+            updateTimerDisplay(key);
+            if (timer.secondsRemaining <= 0) {
+                clearInterval(timer.intervalId);
+                timer.state = 'stopped';
+                timer.controlEl.textContent = 'Start';
+                timer.controlEl.classList.remove('running');
+                alert(`${key} timer is up!`);
             }
         }, 1000);
     }
+}
+
+function resetTimer(key) {
+    const timer = timers[key];
+    clearInterval(timer.intervalId);
+    timer.state = 'stopped';
+    timer.secondsRemaining = timer.totalSeconds;
+    timer.controlEl.textContent = 'Start';
+    timer.controlEl.classList.remove('running');
+    updateTimerDisplay(key);
 }
 
 
@@ -339,9 +373,17 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 
-    // --- NEW: Setup Timer ---
-    document.getElementById('timer-control').addEventListener('click', controlTimer);
-    updateTimerDisplay(); // Set initial time
+    // --- NEW: Setup Timers ---
+    for (const key in timers) {
+        timers[key].displayEl = document.getElementById(`timer-display-${key}`);
+        timers[key].controlEl = document.getElementById(`timer-control-${key}`);
+        timers[key].resetEl = document.getElementById(`timer-reset-${key}`);
+
+        timers[key].controlEl.addEventListener('click', () => controlTimer(key));
+        timers[key].resetEl.addEventListener('click', () => resetTimer(key));
+        
+        updateTimerDisplay(key); // Set initial time
+    }
 });
 """
     json_data = json.dumps(data, indent=4)

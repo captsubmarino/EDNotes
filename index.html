@@ -1,10 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
-<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Viva Study Tracker</title><link rel="stylesheet" href="style.css?v=1759874419"></head>
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Viva Study Tracker</title><link rel="stylesheet" href="style.css?v=1759874633"></head>
 <body>
-    <div id="viva-timer">
-        <div id="timer-display">02:00</div>
-        <button id="timer-control">Start</button>
+    <div id="timer-container">
+        <div class="timer-module">
+            <div id="timer-display-2min" class="timer-display">02:00</div>
+            <div class="timer-buttons">
+                <button id="timer-control-2min">Start</button>
+                <button id="timer-reset-2min">Reset</button>
+            </div>
+        </div>
+        <div class="timer-module">
+            <div id="timer-display-10min" class="timer-display">10:00</div>
+            <div class="timer-buttons">
+                <button id="timer-control-10min">Start</button>
+                <button id="timer-reset-10min">Reset</button>
+            </div>
+        </div>
     </div>
 
     <header><h1>Viva Study Tracker</h1><nav><button class="tab-btn active" data-tab="dashboard">Dashboard</button><button class="tab-btn" data-tab="anat">Anat</button><button class="tab-btn" data-tab="path">Path</button><button class="tab-btn" data-tab="physio">Physio</button><button class="tab-btn" data-tab="pharm">Pharm</button><button class="tab-btn" data-tab="cbb">CBB</button></nav></header>
@@ -25,6 +37,6 @@
         </div>
         <div id="anat" class="tab-content"></div><div id="path" class="tab-content"></div><div id="physio" class="tab-content"></div><div id="pharm" class="tab-content"></div><div id="cbb" class="tab-content"></div>
     </main>
-    <script src="script.js?v=1759874419"></script>
+    <script src="script.js?v=1759874633"></script>
 </body>
 </html>

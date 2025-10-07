@@ -9334,11 +9334,27 @@ const subjectData = {
     }
 };
 
-// --- NEW: Floating Timer Logic ---
-const VIVA_TIMER_SECONDS = 120; // 2 minutes
-let timerInterval = null;
-let secondsRemaining = VIVA_TIMER_SECONDS;
-let timerState = 'stopped'; // Can be 'stopped', 'running', 'paused'
+// --- NEW: Modular Timer Logic for Multiple Timers ---
+const timers = {
+    '2min': {
+        totalSeconds: 120,
+        secondsRemaining: 120,
+        intervalId: null,
+        state: 'stopped', // 'stopped', 'running', 'paused'
+        displayEl: null,
+        controlEl: null,
+        resetEl: null
+    },
+    '10min': {
+        totalSeconds: 600,
+        secondsRemaining: 600,
+        intervalId: null,
+        state: 'stopped',
+        displayEl: null,
+        controlEl: null,
+        resetEl: null
+    }
+};
 
 function formatTime(seconds) {
     const min = Math.floor(seconds / 60);
@@ -9346,42 +9362,48 @@ function formatTime(seconds) {
     return `${String(min).padStart(2, '0')}:${String(sec).padStart(2, '0')}`;
 }
 
-function updateTimerDisplay() {
-    const timerDisplay = document.getElementById('timer-display');
-    timerDisplay.textContent = formatTime(secondsRemaining);
+function updateTimerDisplay(key) {
+    const timer = timers[key];
+    timer.displayEl.textContent = formatTime(timer.secondsRemaining);
 }
 
-function controlTimer() {
-    const timerControl = document.getElementById('timer-control');
+function controlTimer(key) {
+    const timer = timers[key];
 
-    if (timerState === 'running') {
-        // --- Stop/Pause the timer ---
-        clearInterval(timerInterval);
-        timerState = 'paused';
-        timerControl.textContent = 'Resume';
-        timerControl.classList.remove('running');
+    if (timer.state === 'running') {
+        // --- Pause the timer ---
+        clearInterval(timer.intervalId);
+        timer.state = 'paused';
+        timer.controlEl.textContent = 'Resume';
+        timer.controlEl.classList.remove('running');
     } else {
         // --- Start or Resume the timer ---
-        if (timerState === 'stopped') {
-            secondsRemaining = VIVA_TIMER_SECONDS;
-            updateTimerDisplay();
-        }
-        timerState = 'running';
-        timerControl.textContent = 'Pause';
-        timerControl.classList.add('running');
+        timer.state = 'running';
+        timer.controlEl.textContent = 'Pause';
+        timer.controlEl.classList.add('running');
         
-        timerInterval = setInterval(() => {
-            secondsRemaining--;
-            updateTimerDisplay();
-            if (secondsRemaining <= 0) {
-                clearInterval(timerInterval);
-                timerState = 'stopped';
-                timerControl.textContent = 'Reset';
-                timerControl.classList.remove('running');
-                alert('Time is up!');
+        timer.intervalId = setInterval(() => {
+            timer.secondsRemaining--;
+            updateTimerDisplay(key);
+            if (timer.secondsRemaining <= 0) {
+                clearInterval(timer.intervalId);
+                timer.state = 'stopped';
+                timer.controlEl.textContent = 'Start';
+                timer.controlEl.classList.remove('running');
+                alert(`${key} timer is up!`);
             }
         }, 1000);
     }
+}
+
+function resetTimer(key) {
+    const timer = timers[key];
+    clearInterval(timer.intervalId);
+    timer.state = 'stopped';
+    timer.secondsRemaining = timer.totalSeconds;
+    timer.controlEl.textContent = 'Start';
+    timer.controlEl.classList.remove('running');
+    updateTimerDisplay(key);
 }
 
 
@@ -9524,7 +9546,15 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 
-    // --- NEW: Setup Timer ---
-    document.getElementById('timer-control').addEventListener('click', controlTimer);
-    updateTimerDisplay(); // Set initial time
+    // --- NEW: Setup Timers ---
+    for (const key in timers) {
+        timers[key].displayEl = document.getElementById(`timer-display-${key}`);
+        timers[key].controlEl = document.getElementById(`timer-control-${key}`);
+        timers[key].resetEl = document.getElementById(`timer-reset-${key}`);
+
+        timers[key].controlEl.addEventListener('click', () => controlTimer(key));
+        timers[key].resetEl.addEventListener('click', () => resetTimer(key));
+        
+        updateTimerDisplay(key); // Set initial time
+    }
 });
