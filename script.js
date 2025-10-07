@@ -9333,4 +9333,198 @@ const subjectData = {
         ]
     }
 };
-function toggleStatus(e){const t=e.dataset.subject,c=parseInt(e.dataset.sectionIndex,10),a=parseInt(e.dataset.itemIndex,10),n=subjectData[t].data[c].items[a];n.status.toLowerCase().includes("done")?n.status="Pending":n.status="Done",e.textContent=n.status,e.className=n.status.toLowerCase().includes("done")?"status-done":"status-pending",updateProgress()}document.addEventListener("DOMContentLoaded",()=>{const e=document.querySelectorAll(".tab-btn"),t=document.querySelectorAll(".tab-content");e.forEach(c=>{c.addEventListener("click",()=>{e.forEach(e=>e.classList.remove("active")),t.forEach(e=>e.classList.remove("active")),c.classList.add("active"),document.getElementById(c.dataset.tab).classList.add("active")})}),renderTables(),updateProgress()});function renderTables(){for(const e in subjectData){const t=subjectData[e],c=document.getElementById(e);if(c){let a=`<h2>${t.title}</h2><div class="subject-table-container">`;t.data.forEach((e,t)=>{a+="<div>",a+=`<table><thead><tr><th colspan="2">${e.header}</th></tr></thead><tbody>`,e.items.forEach((e,n)=>{const o=e.status.toLowerCase().includes("done")?"status-done":"status-pending",d=e.hyperlink?`<a href="${e.hyperlink}" target="_blank">${e.desc}</a>`:e.desc;a+=`<tr><td>${d}</td><td class="${o}" data-subject="${c.id}" data-section-index="${t}" data-item-index="${n}" onclick="toggleStatus(this)">${e.status}</td></tr>`}),a+="</tbody></table></div>"}),a+="</div>",c.innerHTML=a}}}function updateProgress(){let e=0,t=0;for(const c in subjectData){const a=subjectData[c];let n=0,o=0;a.data.forEach(e=>{e.items.forEach(e=>{o++,e.status.toLowerCase().includes("done")&&n++})}),e+=n,t+=o;const d=o>0?n/o*100:0,s=document.getElementById(`${c}-progress-card`);s&&(s.style.borderLeftColor=a.color,s.innerHTML=`<h3>${a.title}</h3><div class="progress-container"><div class="progress-bar" style="width:${d.toFixed(1)}%;background-color:${a.color};"></div><span class="progress-label">${n} / ${o} (${d.toFixed(1)}%)</span></div>`)}const c=t>0?e/t*100:0;document.getElementById("total-progress-bar").style.width=`${c.toFixed(1)}%`,document.getElementById("total-progress-label").textContent=`${e} / ${t} (${c.toFixed(1)}%)`}
+
+// --- NEW: Floating Timer Logic ---
+const VIVA_TIMER_SECONDS = 120; // 2 minutes
+let timerInterval = null;
+let secondsRemaining = VIVA_TIMER_SECONDS;
+let timerState = 'stopped'; // Can be 'stopped', 'running', 'paused'
+
+function formatTime(seconds) {
+    const min = Math.floor(seconds / 60);
+    const sec = seconds % 60;
+    return `${String(min).padStart(2, '0')}:${String(sec).padStart(2, '0')}`;
+}
+
+function updateTimerDisplay() {
+    const timerDisplay = document.getElementById('timer-display');
+    timerDisplay.textContent = formatTime(secondsRemaining);
+}
+
+function controlTimer() {
+    const timerControl = document.getElementById('timer-control');
+
+    if (timerState === 'running') {
+        // --- Stop/Pause the timer ---
+        clearInterval(timerInterval);
+        timerState = 'paused';
+        timerControl.textContent = 'Resume';
+        timerControl.classList.remove('running');
+    } else {
+        // --- Start or Resume the timer ---
+        if (timerState === 'stopped') {
+            secondsRemaining = VIVA_TIMER_SECONDS;
+            updateTimerDisplay();
+        }
+        timerState = 'running';
+        timerControl.textContent = 'Pause';
+        timerControl.classList.add('running');
+        
+        timerInterval = setInterval(() => {
+            secondsRemaining--;
+            updateTimerDisplay();
+            if (secondsRemaining <= 0) {
+                clearInterval(timerInterval);
+                timerState = 'stopped';
+                timerControl.textContent = 'Reset';
+                timerControl.classList.remove('running');
+                alert('Time is up!');
+            }
+        }, 1000);
+    }
+}
+
+
+// --- Function to toggle inline image visibility ---
+function toggleImage(element) {
+    const parentRow = element.closest('tr');
+    const imageRow = parentRow.nextElementSibling;
+    if (imageRow && imageRow.classList.contains('expandable-image-row')) {
+        const isVisible = imageRow.style.display === 'table-row';
+        imageRow.style.display = isVisible ? 'none' : 'table-row';
+        element.classList.toggle('active', !isVisible);
+    }
+}
+
+// --- Main application functions ---
+function toggleStatus(element) {
+    const subject = element.dataset.subject;
+    const sectionIndex = parseInt(element.dataset.sectionIndex, 10);
+    const itemIndex = parseInt(element.dataset.itemIndex, 10);
+    const item = subjectData[subject].data[sectionIndex].items[itemIndex];
+
+    if (item.status.toLowerCase().includes("done")) {
+        item.status = "Pending";
+    } else {
+        item.status = "Done";
+    }
+    element.textContent = item.status;
+    element.className = item.status.toLowerCase().includes("done") ? "status-done" : "status-pending";
+    updateProgress();
+}
+
+function renderTables() {
+    for (const subjectKey in subjectData) {
+        const subject = subjectData[subjectKey];
+        const container = document.getElementById(subjectKey);
+
+        if (container) {
+            let content = `<h2>${subject.title}</h2><div class="subject-table-container">`;
+            subject.data.forEach((section, sectionIdx) => {
+                content += `<div class="collapsible-wrapper">`;
+                content += `<div class="collapsible-header"><h3>${section.header}</h3></div>`;
+                content += `<div class="collapsible-content"><table><tbody>`;
+
+                section.items.forEach((item, itemIdx) => {
+                    const statusClass = item.status.toLowerCase().includes("done") ? "status-done" : "status-pending";
+                    const isImage = item.hyperlink && /\.(jpeg|jpg|gif|png|svg)$/i.test(item.hyperlink);
+                    let linkHtml = item.desc;
+                    let imageRowHtml = ''; 
+
+                    if(item.hyperlink) {
+                        if(isImage) {
+                            linkHtml = `<a href="#" class="image-toggle-link" onclick="toggleImage(this); return false;">${item.desc}</a>`;
+                            imageRowHtml = `<tr class="expandable-image-row" style="display: none;"><td colspan="2"><img src="${item.hyperlink}" loading="lazy" alt="${item.desc}"></td></tr>`;
+                        } else {
+                            linkHtml = `<a href="${item.hyperlink}" target="_blank">${item.desc}</a>`;
+                        }
+                    }
+
+                    content += `<tr>
+                        <td>${linkHtml}</td>
+                        <td class="${statusClass}" data-subject="${subjectKey}" data-section-index="${sectionIdx}" data-item-index="${itemIdx}" onclick="toggleStatus(this)">
+                            ${item.status}
+                        </td>
+                    </tr>`;
+                    
+                    content += imageRowHtml;
+                });
+                content += `</tbody></table></div></div>`;
+            });
+            content += `</div>`;
+            container.innerHTML = content;
+        }
+    }
+}
+
+function updateProgress() {
+    let totalDone = 0;
+    let totalItems = 0;
+    for (const subjectKey in subjectData) {
+        const subject = subjectData[subjectKey];
+        let subjectDone = 0;
+        let subjectItems = 0;
+        subject.data.forEach(section => {
+            section.items.forEach(item => {
+                subjectItems++;
+                if (item.status.toLowerCase().includes("done")) {
+                    subjectDone++;
+                }
+            });
+        });
+        totalDone += subjectDone;
+        totalItems += subjectItems;
+
+        const percentage = subjectItems > 0 ? (subjectDone / subjectItems) * 100 : 0;
+        const card = document.getElementById(`${subjectKey}-progress-card`);
+        if (card) {
+            card.style.borderLeftColor = subject.color;
+            card.innerHTML = `<h3>${subject.title}</h3>
+            <div class="progress-container">
+                <div class="progress-bar" style="width:${percentage.toFixed(1)}%;background-color:${subject.color};"></div>
+                <span class="progress-label">${subjectDone} / ${subjectItems} (${percentage.toFixed(1)}%)</span>
+            </div>`;
+        }
+    }
+
+    const totalPercentage = totalItems > 0 ? (totalDone / totalItems) * 100 : 0;
+    document.getElementById("total-progress-bar").style.width = `${totalPercentage.toFixed(1)}%`;
+    document.getElementById("total-progress-label").textContent = `${totalDone} / ${totalItems} (${totalPercentage.toFixed(1)}%)`;
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+    // --- Setup page tabs ---
+    const tabs = document.querySelectorAll(".tab-btn");
+    const tabContents = document.querySelectorAll(".tab-content");
+
+    tabs.forEach(tab => {
+        tab.addEventListener("click", () => {
+            tabs.forEach(t => t.classList.remove("active"));
+            tabContents.forEach(c => c.classList.remove("active"));
+            tab.classList.add("active");
+            document.getElementById(tab.dataset.tab).classList.add("active");
+        });
+    });
+
+    // --- Render main content ---
+    renderTables();
+    updateProgress();
+
+    // --- Setup collapsible sections ---
+    document.querySelector('main').addEventListener('click', function(event) {
+        const header = event.target.closest('.collapsible-header');
+        if (header) {
+            header.classList.toggle('active');
+            const content = header.nextElementSibling;
+            if (content.style.display === "block") {
+                content.style.display = "none";
+            } else {
+                content.style.display = "block";
+            }
+        }
+    });
+
+    // --- NEW: Setup Timer ---
+    document.getElementById('timer-control').addEventListener('click', controlTimer);
+    updateTimerDisplay(); // Set initial time
+});
