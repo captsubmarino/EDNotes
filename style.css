@@ -11,16 +11,3 @@ table{width:100%;border-collapse:collapse;font-size:14px}th,td{padding:10px;bord
 .mcq-anat{border-color:#3498db;background-color:#eaf3fa;}.mcq-anat .mcq-link{background-color:#2980b9}.mcq-anat .mcq-link:hover{background-color:#2471a3}
 .mcq-path{border-color:#e74c3c;background-color:#fbecec;}.mcq-path .mcq-link{background-color:#c0392b}.mcq-path .mcq-link:hover{background-color:#a93226}
 .mcq-random{border-color:#7f8c8d;background-color:#f2f4f4;}.mcq-random .mcq-link{background-color:#707b7c}.mcq-random .mcq-link:hover{background-color:#626b6c}
-/* --- NEW: Mobile Responsive Styles --- */
-@media (max-width: 768px) {
-    body{padding:10px}
-    h1{font-size:1.6em}
-    nav{flex-wrap:wrap;justify-content:center}
-    .tab-btn{padding:8px 12px;font-size:14px}
-    .dashboard-layout{flex-direction:column}
-    .left-column,.right-column{min-width:100%}
-    .subject-table-container{grid-template-columns:1fr}
-    #timer-container{width:140px;top:10px;right:10px}
-    .timer-display{font-size:1.5em}
-    .timer-buttons button{font-size:0.9em;padding:6px}
-}
