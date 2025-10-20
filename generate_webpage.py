@@ -94,7 +94,7 @@ def generate_web_data():
     return all_subject_data
 
 def write_html_file():
-    """Writes the HTML file, forcing a desktop viewport on all devices."""
+    """Writes the HTML file with the corrected case-sensitive filenames."""
     cache_buster = int(time.time())
     html_content = f"""<!DOCTYPE html>
 <html lang="en">
@@ -144,25 +144,25 @@ def write_html_file():
                             <h3>Physio</h3>
                             <a href="IM Physio.htm" class="mcq-link" target="_blank">IM Physio</a>
                             <a href="ME Physio.htm" class="mcq-link" target="_blank">ME Physio</a>
-                            <a href="Geelong Physio.htm" class="mcq-link" target="_blank">Geelong Physio</a>
+                            <a href="Geelong physio.htm" class="mcq-link" target="_blank">Geelong Physio</a>
                         </div>
                         <div class="mcq-category mcq-pharm">
                             <h3>Pharm</h3>
                             <a href="IM Pharm.htm" class="mcq-link" target="_blank">IM Pharm</a>
                             <a href="ME Pharm.htm" class="mcq-link" target="_blank">ME Pharm</a>
-                            <a href="Geelong Pharm.htm" class="mcq-link" target="_blank">Geelong Pharm</a>
+                            <a href="Geelong pharm.htm" class="mcq-link" target="_blank">Geelong Pharm</a>
                         </div>
                         <div class="mcq-category mcq-anat">
                             <h3>Anat</h3>
                             <a href="IM Anat.htm" class="mcq-link" target="_blank">IM Anat</a>
                             <a href="ME Anat.htm" class="mcq-link" target="_blank">ME Anat</a>
-                            <a href="Geelong Anat.htm" class="mcq-link" target="_blank">Geelong Anat</a>
+                            <a href="Geelong anat.htm" class="mcq-link" target="_blank">Geelong Anat</a>
                         </div>
                         <div class="mcq-category mcq-path">
                             <h3>Path</h3>
                             <a href="IM Path.htm" class="mcq-link" target="_blank">IM Path</a>
                             <a href="ME Path.htm" class="mcq-link" target="_blank">ME Path</a>
-                            <a href="Geelong Path.htm" class="mcq-link" target="_blank">Geelong Path</a>
+                            <a href="Geelong path.htm" class="mcq-link" target="_blank">Geelong Path</a>
                         </div>
                         <div class="mcq-category mcq-random">
                             <h3>Random Collection</h3>
