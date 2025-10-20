@@ -94,7 +94,7 @@ def generate_web_data():
     return all_subject_data
 
 def write_html_file():
-    """Writes the HTML file with the new NotebookLM link."""
+    """Writes the HTML file."""
     cache_buster = int(time.time())
     html_content = f"""<!DOCTYPE html>
 <html lang="en">
@@ -181,8 +181,8 @@ def write_html_file():
     print(f"✅ Created '{OUTPUT_HTML_FILE}'")
 
 def write_css_file():
-    """Writes the CSS file, with styles for the layout and colored MCQ boxes."""
-    css_content = """body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;background-color:#f4f7f9;color:#333;margin:0;padding:20px}header{text-align:center;margin-bottom:20px}h1{color:#2c3e50}h2{color:#34495e;border-bottom:2px solid #e0e0e0;padding-bottom:10px;margin-top:40px}nav{display:flex;justify-content:center;background-color:#fff;border-radius:8px;padding:5px;box-shadow:0 2px 4px rgba(0,0,0,.1);margin-bottom:20px}.tab-btn{padding:10px 20px;border:none;background-color:transparent;cursor:pointer;font-size:16px;border-radius:6px;transition:background-color .3s,color .3s}.tab-btn.active{background-color:#3498db;color:#fff}.tab-btn:hover:not(.active){background-color:#ecf0f1}.tab-content{display:none;padding:20px;background-color:#fff;border-radius:8px;box-shadow:0 2px 4px rgba(0,0,0,.1)}.tab-content.active{display:block}.progress-container{width:100%;background-color:#e0e0e0;border-radius:25px;margin:15px 0;position:relative;height:30px}.progress-bar{height:100%;background-color:#2ecc71;border-radius:25px;text-align:center;line-height:30px;color:#fff;width:0;transition:width .5s ease-in-out}.progress-label{position:absolute;width:100%;text-align:center;top:0;left:0;line-height:30px;font-weight:700;color:#333}.subject-progress-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:20px;margin-top:20px}.progress-card{padding:15px;background:#fff;border-left:5px solid #3498db}.progress-card h3{margin-top:0}
+    """Writes the CSS file, now with responsive styles for mobile."""
+    css_content = """body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;background-color:#f4f7f9;color:#333;margin:0;padding:20px}header{text-align:center;margin-bottom:20px}h1{color:#2c3e50;font-size:2em}h2{color:#34495e;border-bottom:2px solid #e0e0e0;padding-bottom:10px;margin-top:40px}nav{display:flex;justify-content:center;background-color:#fff;border-radius:8px;padding:5px;box-shadow:0 2px 4px rgba(0,0,0,.1);margin-bottom:20px}.tab-btn{padding:10px 20px;border:none;background-color:transparent;cursor:pointer;font-size:16px;border-radius:6px;transition:background-color .3s,color .3s}.tab-btn.active{background-color:#3498db;color:#fff}.tab-btn:hover:not(.active){background-color:#ecf0f1}.tab-content{display:none;padding:20px;background-color:#fff;border-radius:8px;box-shadow:0 2px 4px rgba(0,0,0,.1)}.tab-content.active{display:block}.progress-container{width:100%;background-color:#e0e0e0;border-radius:25px;margin:15px 0;position:relative;height:30px}.progress-bar{height:100%;background-color:#2ecc71;border-radius:25px;text-align:center;line-height:30px;color:#fff;width:0;transition:width .5s ease-in-out}.progress-label{position:absolute;width:100%;text-align:center;top:0;left:0;line-height:30px;font-weight:700;color:#333}.subject-progress-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:20px;margin-top:20px}.progress-card{padding:15px;background:#fff;border-left:5px solid #3498db}.progress-card h3{margin-top:0}
 .subject-table-container{display:grid;grid-template-columns:repeat(auto-fit,minmax(900px,1fr));gap:20px}
 table{width:100%;border-collapse:collapse;font-size:14px}th,td{padding:10px;border:1px solid #ddd;text-align:left}th{background-color:#ecf0f1}td a{text-decoration:none;color:#2980b9;font-weight:500}td a:hover{text-decoration:underline}.status-done{background-color:#d4edda;color:#155724;font-weight:700}.status-pending{background-color:#fff3cd;color:#856404}.downloads-section{margin-top:40px;padding-top:20px;border-top:2px solid #e0e0e0;text-align:center}.download-link{display:inline-block;margin:5px 10px;padding:10px 18px;background-color:#7f8c8d;color:#fff;text-decoration:none;border-radius:5px;font-weight:700;transition:background-color .3s}.download-link:hover{background-color:#6c7a7d}
 .collapsible-header{background-color:#ecf0f1;padding:12px 15px;cursor:pointer;border:1px solid #ddd;border-radius:4px 4px 0 0;margin-top:15px;display:flex;justify-content:space-between;align-items:center}.collapsible-header h3{margin:0;font-size:16px;color:#34495e}.collapsible-header::after{content:'\\25BC';font-size:14px;transition:transform .3s}.collapsible-header.active::after{transform:rotate(180deg)}.collapsible-content{display:none;overflow:hidden;border:1px solid #ddd;border-top:none;border-radius:0 0 4px 4px}.collapsible-content table{margin-bottom:0}
@@ -195,12 +195,25 @@ table{width:100%;border-collapse:collapse;font-size:14px}th,td{padding:10px;bord
 .mcq-anat{border-color:#3498db;background-color:#eaf3fa;}.mcq-anat .mcq-link{background-color:#2980b9}.mcq-anat .mcq-link:hover{background-color:#2471a3}
 .mcq-path{border-color:#e74c3c;background-color:#fbecec;}.mcq-path .mcq-link{background-color:#c0392b}.mcq-path .mcq-link:hover{background-color:#a93226}
 .mcq-random{border-color:#7f8c8d;background-color:#f2f4f4;}.mcq-random .mcq-link{background-color:#707b7c}.mcq-random .mcq-link:hover{background-color:#626b6c}
+/* --- NEW: Mobile Responsive Styles --- */
+@media (max-width: 768px) {
+    body{padding:10px}
+    h1{font-size:1.6em}
+    nav{flex-wrap:wrap;justify-content:center}
+    .tab-btn{padding:8px 12px;font-size:14px}
+    .dashboard-layout{flex-direction:column}
+    .left-column,.right-column{min-width:100%}
+    .subject-table-container{grid-template-columns:1fr}
+    #timer-container{width:140px;top:10px;right:10px}
+    .timer-display{font-size:1.5em}
+    .timer-buttons button{font-size:0.9em;padding:6px}
+}
 """
     with open(OUTPUT_CSS_FILE, 'w', encoding='utf-8') as f: f.write(css_content)
     print(f"✅ Created '{OUTPUT_CSS_FILE}'")
 
 def write_js_file(data):
-    """Writes the JS file, with modular, dual timer logic."""
+    """Writes the JS file."""
     js_template = r"""
 const subjectData = {data_placeholder};
 
