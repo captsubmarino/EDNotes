@@ -166,7 +166,7 @@ def write_html_file():
                         </div>
                         <div class="mcq-category mcq-random">
                             <h3>Random Collection</h3>
-                            <a href="Anatmerged.html" class="mcq-link" target="_blank">Anat Merged</a>
+                            <a href="anatmerged.html" class="mcq-link" target="_blank">Anat Merged</a>
                             <a href="pathmerged.html" class="mcq-link" target="_blank">Path Merged</a>
                             <a href="pharmmerged.html" class="mcq-link" target="_blank">Pharm Merged</a>
                             <a href="physiomerged.html" class="mcq-link" target="_blank">Physio Merged</a>
