@@ -9334,13 +9334,12 @@ const subjectData = {
     }
 };
 
-// --- NEW: Modular Timer Logic for Multiple Timers ---
 const timers = {
     '2min': {
         totalSeconds: 120,
         secondsRemaining: 120,
         intervalId: null,
-        state: 'stopped', // 'stopped', 'running', 'paused'
+        state: 'stopped',
         displayEl: null,
         controlEl: null,
         resetEl: null
@@ -9371,13 +9370,11 @@ function controlTimer(key) {
     const timer = timers[key];
 
     if (timer.state === 'running') {
-        // --- Pause the timer ---
         clearInterval(timer.intervalId);
         timer.state = 'paused';
         timer.controlEl.textContent = 'Resume';
         timer.controlEl.classList.remove('running');
     } else {
-        // --- Start or Resume the timer ---
         timer.state = 'running';
         timer.controlEl.textContent = 'Pause';
         timer.controlEl.classList.add('running');
@@ -9406,8 +9403,6 @@ function resetTimer(key) {
     updateTimerDisplay(key);
 }
 
-
-// --- Function to toggle inline image visibility ---
 function toggleImage(element) {
     const parentRow = element.closest('tr');
     const imageRow = parentRow.nextElementSibling;
@@ -9418,7 +9413,6 @@ function toggleImage(element) {
     }
 }
 
-// --- Main application functions ---
 function toggleStatus(element) {
     const subject = element.dataset.subject;
     const sectionIndex = parseInt(element.dataset.sectionIndex, 10);
@@ -9515,7 +9509,6 @@ function updateProgress() {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-    // --- Setup page tabs ---
     const tabs = document.querySelectorAll(".tab-btn");
     const tabContents = document.querySelectorAll(".tab-content");
 
@@ -9528,11 +9521,9 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
 
-    // --- Render main content ---
     renderTables();
     updateProgress();
 
-    // --- Setup collapsible sections ---
     document.querySelector('main').addEventListener('click', function(event) {
         const header = event.target.closest('.collapsible-header');
         if (header) {
@@ -9546,7 +9537,6 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 
-    // --- NEW: Setup Timers ---
     for (const key in timers) {
         timers[key].displayEl = document.getElementById(`timer-display-${key}`);
         timers[key].controlEl = document.getElementById(`timer-control-${key}`);
@@ -9555,6 +9545,6 @@ document.addEventListener("DOMContentLoaded", () => {
         timers[key].controlEl.addEventListener('click', () => controlTimer(key));
         timers[key].resetEl.addEventListener('click', () => resetTimer(key));
         
-        updateTimerDisplay(key); // Set initial time
+        updateTimerDisplay(key);
     }
 });

@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Viva Study Tracker</title><link rel="stylesheet" href="style.css?v=1759874633"></head>
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Viva Study Tracker</title><link rel="stylesheet" href="style.css?v=1760936344"></head>
 <body>
     <div id="timer-container">
         <div class="timer-module">
@@ -22,21 +22,58 @@
     <header><h1>Viva Study Tracker</h1><nav><button class="tab-btn active" data-tab="dashboard">Dashboard</button><button class="tab-btn" data-tab="anat">Anat</button><button class="tab-btn" data-tab="path">Path</button><button class="tab-btn" data-tab="physio">Physio</button><button class="tab-btn" data-tab="pharm">Pharm</button><button class="tab-btn" data-tab="cbb">CBB</button></nav></header>
     <main>
         <div id="dashboard" class="tab-content active">
-            <div class="disclaimer-box">
-                <p><strong>Acknowledgement:</strong> All content is sourced from the ACEM training site and EDvivas. This page is for personal data reorganization only.</p>
-                <a href="https://notebooklm.google.com/notebook/e1cdd0b3-3f57-452b-84e3-bc3fd476d80c?authuser=3" target="_blank" class="notebook-link">Open Study Notes in NotebookLM</a>
-            </div>
-            <h2>Overall Progress</h2>
-            <div class="progress-container"><div class="progress-bar" id="total-progress-bar"></div><span class="progress-label" id="total-progress-label"></span></div>
-            <div class="subject-progress-grid"><div id="anat-progress-card" class="progress-card"></div><div id="path-progress-card" class="progress-card"></div><div id="physio-progress-card" class="progress-card"></div><div id="pharm-progress-card" class="progress-card"></div><div id="cbb-progress-card" class="progress-card"></div></div>
-            <div class="downloads-section">
-                <h2>Downloads</h2>
-                <a href="combined1.pdf" class="download-link" download>Download PDF Summary</a>
-                <a href="viva_links_fixed.xlsx" class="download-link" download>Download Excel Source File</a>
+            <div class="dashboard-layout">
+                <div class="left-column">
+                    <h2>Overall Progress</h2>
+                    <div class="progress-container"><div class="progress-bar" id="total-progress-bar"></div><span class="progress-label" id="total-progress-label"></span></div>
+                    <div class="subject-progress-grid"><div id="anat-progress-card" class="progress-card"></div><div id="path-progress-card" class="progress-card"></div><div id="physio-progress-card" class="progress-card"></div><div id="pharm-progress-card" class="progress-card"></div><div id="cbb-progress-card" class="progress-card"></div></div>
+                    <div class="downloads-section">
+                        <h2>Downloads</h2>
+                        <a href="combined1.pdf" class="download-link" download>Viva Stations Compiled to 2025</a>
+                        <a href="viva_links_fixed.xlsx" class="download-link" download>Download Excel Source File</a>
+                    </div>
+                </div>
+                <div class="right-column">
+                    <div class="mcq-section">
+                        <h2>MCQs</h2>
+                        <div class="mcq-category mcq-physio">
+                            <h3>Physio</h3>
+                            <a href="IM Physio.htm" class="mcq-link" target="_blank">IM Physio</a>
+                            <a href="ME Physio.htm" class="mcq-link" target="_blank">ME Physio</a>
+                            <a href="Geelong Physio.htm" class="mcq-link" target="_blank">Geelong Physio</a>
+                        </div>
+                        <div class="mcq-category mcq-pharm">
+                            <h3>Pharm</h3>
+                            <a href="IM Pharm.htm" class="mcq-link" target="_blank">IM Pharm</a>
+                            <a href="ME Pharm.htm" class="mcq-link" target="_blank">ME Pharm</a>
+                            <a href="Geelong Pharm.htm" class="mcq-link" target="_blank">Geelong Pharm</a>
+                        </div>
+                        <div class="mcq-category mcq-anat">
+                            <h3>Anat</h3>
+                            <a href="IM Anat.htm" class="mcq-link" target="_blank">IM Anat</a>
+                            <a href="ME Anat.htm" class="mcq-link" target="_blank">ME Anat</a>
+                            <a href="Geelong Anat.htm" class="mcq-link" target="_blank">Geelong Anat</a>
+                        </div>
+                        <div class="mcq-category mcq-path">
+                            <h3>Path</h3>
+                            <a href="IM Path.htm" class="mcq-link" target="_blank">IM Path</a>
+                            <a href="ME Path.htm" class="mcq-link" target="_blank">ME Path</a>
+                            <a href="Geelong Path.htm" class="mcq-link" target="_blank">Geelong Path</a>
+                        </div>
+                        <div class="mcq-category mcq-random">
+                            <h3>Random Collection</h3>
+                            <a href="Anatmerged.html" class="mcq-link" target="_blank">Anat Merged</a>
+                            <a href="pathmerged.html" class="mcq-link" target="_blank">Path Merged</a>
+                            <a href="pharmmerged.html" class="mcq-link" target="_blank">Pharm Merged</a>
+                            <a href="physiomerged.html" class="mcq-link" target="_blank">Physio Merged</a>
+                            <a href="emcq1.html" class="mcq-link" target="_blank">EMCQ 1</a>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
         <div id="anat" class="tab-content"></div><div id="path" class="tab-content"></div><div id="physio" class="tab-content"></div><div id="pharm" class="tab-content"></div><div id="cbb" class="tab-content"></div>
     </main>
-    <script src="script.js?v=1759874633"></script>
+    <script src="script.js?v=1760936344"></script>
 </body>
 </html>
